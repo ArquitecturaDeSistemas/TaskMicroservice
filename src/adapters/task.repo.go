@@ -1,14 +1,13 @@
 package adapters
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
 
-	"github.com/ArquitecturaDeSistemas/taskmicroservice/database"
-	model "github.com/ArquitecturaDeSistemas/taskmicroservice/dominio"
-	"github.com/ArquitecturaDeSistemas/taskmicroservice/ports"
+	"github.com/ArquitecturaDeSistemas/taskmicroservice/src/database"
+	model "github.com/ArquitecturaDeSistemas/taskmicroservice/src/dominio"
+	"github.com/ArquitecturaDeSistemas/taskmicroservice/src/ports"
 
 	"gorm.io/gorm"
 )
@@ -19,29 +18,19 @@ import (
  */
 
 type taskRepository struct {
-	db             *database.DB
-	activeSessions map[string]string
+	db *database.DB
 }
 
 func NewTaskRepository(db *database.DB) ports.TaskRepository {
 	return &taskRepository{
-		db:             db,
-		activeSessions: make(map[string]string),
+		db: db,
 	}
-}
-
-func ToJSON(obj interface{}) (string, error) {
-	jsonData, err := json.Marshal(obj)
-	if err != nil {
-		return "", err
-	}
-	return string(jsonData), err
 }
 
 // Obtener Trabajo obtiene un trabajo por su ID.
-func (ur *taskRepository) Usuario(id string) (*model.Usuario, error) {
+func (ur *taskRepository) Tarea(id string) (*model.Tarea, error) {
 	if id == "" {
-		return nil, errors.New("El ID de usuario es requerido")
+		return nil, errors.New("El ID de la tarea es requerido")
 	}
 
 	var tareaGORM model.TareaGORM
@@ -51,7 +40,7 @@ func (ur *taskRepository) Usuario(id string) (*model.Usuario, error) {
 		if result.Error == gorm.ErrRecordNotFound {
 			return nil, result.Error
 		}
-		log.Printf("Error al obtener el usuario con ID %s: %v", id, result.Error)
+		log.Printf("Error al obtener tarea con ID %s: %v", id, result.Error)
 		return nil, result.Error
 	}
 
@@ -59,7 +48,7 @@ func (ur *taskRepository) Usuario(id string) (*model.Usuario, error) {
 }
 
 // Usuarios obtiene todos los usuarios de la base de datos.
-func (ur *taskRepository) Usuarios() ([]*model.Tarea, error) {
+func (ur *taskRepository) Tareas() ([]*model.Tarea, error) {
 	var tareasGORM []model.TareaGORM
 	result := ur.db.GetConn().Find(&tareasGORM)
 
@@ -79,12 +68,12 @@ func (ur *taskRepository) Usuarios() ([]*model.Tarea, error) {
 func (ur *taskRepository) CrearTarea(input model.CrearTareaInput) (*model.Tarea, error) {
 
 	tareaGORM :=
-		&model.UsuarioGORM{
-			titulo:       input.Titulo,
-			descripcion:  input.Descripcion,
-			fechaInicio:  input.fechaInicio,
-			fechaTermino: input.fechaTermino,
-			userId:       input.userId,
+		&model.TareaGORM{
+			Titulo:       input.Titulo,
+			Descripcion:  input.Descripcion,
+			FechaInicio:  input.FechaInicio,
+			FechaTermino: input.FechaTermino,
+			UserId:       input.UserId,
 		}
 	result := ur.db.GetConn().Create(&tareaGORM)
 	if result.Error != nil {
@@ -118,14 +107,14 @@ func (ur *taskRepository) ActualizarTarea(id string, input *model.ActualizarTare
 	if input.Descripcion != nil {
 		tareaGORM.Descripcion = *input.Descripcion
 	}
-	if input.fechaInicio != nil {
-		tareaGORM.fechaInicio = *input.fechaInicio
+	if input.FechaInicio != nil {
+		tareaGORM.FechaInicio = *input.FechaInicio
 	}
-	if input.fechaTermino != nil {
-		tareaGORM.fechaTermino = *input.fechaTermino
+	if input.FechaTermino != nil {
+		tareaGORM.FechaTermino = *input.FechaTermino
 	}
-	if input.userId != nil {
-		tareaGORM.userId = *input.UserId
+	if input.UserId != nil {
+		tareaGORM.UserId = *input.UserId
 	}
 
 	result = ur.db.GetConn().Save(&tareaGORM)
@@ -137,7 +126,7 @@ func (ur *taskRepository) ActualizarTarea(id string, input *model.ActualizarTare
 }
 
 // EliminarUsuario elimina un usuario de la base de datos por su ID.
-func (ur *taskRepository) EliminarUsuario(id string) (*model.RespuestaEliminacion, error) {
+func (ur *taskRepository) EliminarTarea(id string) (*model.RespuestaEliminacion, error) {
 	// Intenta buscar el usuario por su ID
 	var tareaGORM model.TareaGORM
 	result := ur.db.GetConn().First(&tareaGORM, id)
@@ -172,7 +161,7 @@ func (ur *taskRepository) EliminarUsuario(id string) (*model.RespuestaEliminacio
 
 	// Éxito al eliminar el tarea
 	response := &model.RespuestaEliminacion{
-		Mensaje: "Usuario eliminado con éxito",
+		Mensaje: "Tarea eliminada con éxito",
 	}
 	return response, result.Error
 

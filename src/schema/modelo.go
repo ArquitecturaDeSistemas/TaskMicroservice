@@ -1,14 +1,12 @@
 package schema
 
-import "time"
-
-type Notification struct {
-	ID           uint      `gorm:"primaryKey:autoIncrement" json:"id"`
-	Titulo       string    `gorm:"type:varchar(255);not null"`
-	descripcion  string    `gorm:"type:varchar(255);not null"`
-	fechaInicio  time.Time `gorm:"not null" json:"fechaInicio"`
-	fechaTermino time.Time `gorm:"not null" json:"fecha_termino"`
-	userId       string    `gorm:"type:varchar(255);not null"`
+type Tarea struct {
+	ID           uint   `gorm:"primaryKey:autoIncrement" json:"id"`
+	Titulo       string `gorm:"type:varchar(255);not null"`
+	Descripcion  string `gorm:"type:varchar(255);not null"`
+	FechaInicio  string `gorm:"not null" json:"fechaInicio"`
+	FechaTermino string `gorm:"not null" json:"fecha_termino"`
+	UserId       string `gorm:"type:varchar(255);not null"`
 }
 
-type Notifications []Notification
+type Notifications []Tarea

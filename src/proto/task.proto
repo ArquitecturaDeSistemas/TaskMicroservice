@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-import "google/protobuf/timestamp.proto";
-
 package proto;
 
 option go_package = "github.com/ArquitecturaDeSistemas/taskmicroservice/src/proto";
@@ -17,17 +15,18 @@ service TaskService {
 message CreateTaskRequest {
   string titulo = 1;
   string descripcion = 2;
-  google.protobuf.Timestamp fechaInicio = 3;
-  google.protobuf.Timestamp fechaTermino = 4;
+  string fechaInicio = 3;
+  string fechaTermino = 4;
   string userId = 5;
 }
 
 message CreateTaskResponse {
-  string titulo = 1;
-  string descripcion = 2;
-  google.protobuf.Timestamp fechaInicio = 3;
-  google.protobuf.Timestamp fechaTermino = 4;
-  string userId = 5;
+  string id = 1;
+  string titulo = 2;
+  string descripcion = 3;
+  string fechaInicio = 4;
+  string fechaTermino = 5;
+  string userId = 6;
 }
 
 message GetTaskRequest {
@@ -37,25 +36,28 @@ message GetTaskRequest {
 message GetTaskResponse {
   string titulo = 1;
   string descripcion = 2;
-  google.protobuf.Timestamp fechaInicio = 3;
-  google.protobuf.Timestamp fechaTermino = 4;
+  string fechaInicio = 3;
+  string fechaTermino = 4;
   string userId = 5;
+  string id = 6;
 }
 
 message UpdateTaskRequest {
   string titulo = 1;
   string descripcion = 2;
-  google.protobuf.Timestamp fechaInicio = 3;
-  google.protobuf.Timestamp fechaTermino = 4;
+  string fechaInicio = 3;
+  string fechaTermino = 4;
   string userId = 5;
+  string id = 6;
 }
 
 message UpdateTaskResponse {
   string titulo = 1;
   string descripcion = 2;
-  google.protobuf.Timestamp fechaInicio = 3;
-  google.protobuf.Timestamp fechaTermino = 4;
+  string fechaInicio = 3;
+  string fechaTermino = 4;
   string userId = 5;
+  string id = 6;
 }
 
 message DeleteTaskRequest {
@@ -76,8 +78,9 @@ message ListTasksResponse {
 message Task{
   string titulo = 1;
   string descripcion = 2;
-  google.protobuf.Timestamp fechaInicio = 3;
-  google.protobuf.Timestamp fechaTermino = 4;
+  string fechaInicio = 3;
+  string fechaTermino = 4;
   string userId = 5;
+  string id = 6;
 }
 

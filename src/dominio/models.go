@@ -1,23 +1,19 @@
 package dominio
 
-import (
-	"time"
-)
-
 type ActualizarTareaInput struct {
-	Titulo       *string    `json:"titulo,omitempty"`
-	Descripcion  *string    `json:"descripcion,omitempty"`
-	FechaInicio  *time.Time `json:"fechaInicio,omitempty"`
-	FechaTermino *time.Time `json:"fechaTermino,omitempty"`
-	UserId       *string    `json:"userId,omitempty"`
+	Titulo       *string `json:"titulo,omitempty"`
+	Descripcion  *string `json:"descripcion,omitempty"`
+	FechaInicio  *string `json:"fechaInicio,omitempty"`
+	FechaTermino *string `json:"fechaTermino,omitempty"`
+	UserId       *string `json:"userId,omitempty"`
 }
 
 type CrearTareaInput struct {
-	Titulo       string    `json:"titulo"`
-	Descripcion  string    `json:"descripcion"`
-	FechaInicio  time.Time `json:"fechaInicio"`
-	FechaTermino time.Time `json:"fechaTermino"`
-	UserId       string    `json:"userId"`
+	Titulo       string `json:"titulo"`
+	Descripcion  string `json:"descripcion"`
+	FechaInicio  string `json:"fechaInicio"`
+	FechaTermino string `json:"fechaTermino"`
+	UserId       string `json:"userId"`
 }
 
 type RespuestaEliminacion struct {
@@ -25,12 +21,12 @@ type RespuestaEliminacion struct {
 }
 
 type Tarea struct {
-	ID           string    `json:"id"`
-	Titulo       string    `json:"titulo"`
-	Descripcion  string    `json:"descripcion"`
-	FechaInicio  time.Time `json:"fechaInicio"`
-	FechaTermino time.Time `json:"fechaTermino"`
-	UserId       string    `json:"userId"`
+	ID           string `json:"id"`
+	Titulo       string `json:"titulo"`
+	Descripcion  string `json:"descripcion"`
+	FechaInicio  string `json:"fechaInicio"`
+	FechaTermino string `json:"fechaTermino"`
+	UserId       string `json:"userId"`
 }
 
 func (Tarea) IsEntity() {}

@@ -4,60 +4,61 @@ import (
 	"context"
 	"fmt"
 
-	model "github.com/ArquitecturaDeSistemas/taskmicroservice/dominio"
-	repository "github.com/ArquitecturaDeSistemas/taskmicroservice/ports"
-	pb "github.com/ArquitecturaDeSistemas/taskmicroservice/proto"
+	//model "github.com/ArquitecturaDeSistemas/taskmicroservice/dominio"
+	model "github.com/ArquitecturaDeSistemas/taskmicroservice/src/dominio"
+	repository "github.com/ArquitecturaDeSistemas/taskmicroservice/src/ports"
+	pb "github.com/ArquitecturaDeSistemas/taskmicroservice/src/proto"
 )
 
 // este servicio implementa la interfaz UserServiceServer
 // que se genera a partir del archivo proto
 type TaskService struct {
-	pb.UnimplementedUserServiceServer
-	repo repository.UserRepository
+	pb.UnimplementedTaskServiceServer
+	repo repository.TaskRepository
 }
 
-func NewTaskService(repo repository.UserRepository) *TaskService {
+func NewTaskService(repo repository.TaskRepository) *TaskService {
 	return &TaskService{repo: repo}
 }
 
 func (s *TaskService) CreateTask(ctx context.Context, req *pb.CreateTaskRequest) (*pb.CreateTaskResponse, error) {
 
 	crearTareaInput := model.CrearTareaInput{
-		titulo:       req.GetTitulo(),
-		descripcion:  req.GetDescripcion(),
-		fechaInicio:  req.GetfechaInicio(),
-		fechaTermino: req.GetfechaTermino(),
-		userId:       req.GetuserId(),
+		Titulo:       req.GetTitulo(),
+		Descripcion:  req.GetDescripcion(),
+		FechaInicio:  req.GetFechaInicio(),
+		FechaTermino: req.GetFechaTermino(),
+		UserId:       req.GetUserId(),
 	}
-	u, err := s.repo.CrearUsuario(crearTareaInput)
+	u, err := s.repo.CrearTarea(crearTareaInput)
 	if err != nil {
 		return nil, err
 	}
 	fmt.Printf("Tarea creado: %v", u)
 	response := &pb.CreateTaskResponse{
 		Id:           u.ID,
-		titulo:       u.Titulo,
-		descripcion:  u.Descripcion,
-		fechaInicio:  u.fechaInicio,
-		fechaTermino: u.fechaTermino,
-		userId:       u.userId,
+		Titulo:       u.Titulo,
+		Descripcion:  u.Descripcion,
+		FechaInicio:  u.FechaInicio,
+		FechaTermino: u.FechaTermino,
+		UserId:       u.UserId,
 	}
 	fmt.Printf("Tarea creado: %v", response)
 	return response, nil
 }
 
 func (s *TaskService) GetTask(ctx context.Context, req *pb.GetTaskRequest) (*pb.GetTaskResponse, error) {
-	u, err := s.repo.Usuario(req.GetId())
+	u, err := s.repo.Tarea(req.GetId())
 	if err != nil {
 		return nil, err
 	}
 	response := &pb.GetTaskResponse{
 		Id:           u.ID,
-		titulo:       u.Titulo,
-		descripcion:  u.Descripcion,
-		fechaInicio:  u.fechaInicio,
-		fechaTermino: u.fechaTermino,
-		userId:       u.userId,
+		Titulo:       u.Titulo,
+		Descripcion:  u.Descripcion,
+		FechaInicio:  u.FechaInicio,
+		FechaTermino: u.FechaTermino,
+		UserId:       u.UserId,
 	}
 	return response, nil
 }
@@ -71,11 +72,11 @@ func (s *TaskService) ListTasks(ctx context.Context, req *pb.ListTasksRequest) (
 	for _, u := range tasks {
 		task := &pb.Task{
 			Id:           u.ID,
-			titulo:       u.Titulo,
-			descripcion:  u.Descripcion,
-			fechaInicio:  u.fechaInicio,
-			fechaTermino: u.fechaTermino,
-			userId:       u.userId,
+			Titulo:       u.Titulo,
+			Descripcion:  u.Descripcion,
+			FechaInicio:  u.FechaInicio,
+			FechaTermino: u.FechaTermino,
+			UserId:       u.UserId,
 		}
 		response = append(response, task)
 	}
@@ -86,16 +87,16 @@ func (s *TaskService) ListTasks(ctx context.Context, req *pb.ListTasksRequest) (
 func (s *TaskService) UpdateTask(ctx context.Context, req *pb.UpdateTaskRequest) (*pb.UpdateTaskResponse, error) {
 	titulo := req.GetTitulo()
 	descripcion := req.GetDescripcion()
-	fechaInicio := req.GetfechaInicio()
-	fechaTermino := req.GetfechaTermino()
-	userId := req.GetuserId()
+	fechaInicio := req.GetFechaInicio()
+	fechaTermino := req.GetFechaTermino()
+	userId := req.GetUserId()
 	fmt.Printf("Nombre: %v", titulo)
 	actualizarTareaInput := &model.ActualizarTareaInput{
 		Titulo:       &titulo,
-		descripcion:  &descripcion,
-		fechaInicio:  &fechaInicio,
-		fechaTermino: &fechaTermino,
-		userId:       &userId,
+		Descripcion:  &descripcion,
+		FechaInicio:  &fechaInicio,
+		FechaTermino: &fechaTermino,
+		UserId:       &userId,
 	}
 	fmt.Printf("Tarea actualizada input: %v", actualizarTareaInput)
 	u, err := s.repo.ActualizarTarea(req.GetId(), actualizarTareaInput)
@@ -105,11 +106,11 @@ func (s *TaskService) UpdateTask(ctx context.Context, req *pb.UpdateTaskRequest)
 	fmt.Printf("Tarea actualizado: %v", u)
 	response := &pb.UpdateTaskResponse{
 		Id:           u.ID,
-		titulo:       u.Titulo,
-		descripcion:  u.Descripcion,
-		fechaInicio:  u.fechaInicio,
-		fechaTermino: u.fechaTermino,
-		userId:       u.userId,
+		Titulo:       u.Titulo,
+		Descripcion:  u.Descripcion,
+		FechaInicio:  u.FechaInicio,
+		FechaTermino: u.FechaTermino,
+		UserId:       u.UserId,
 	}
 	return response, nil
 }

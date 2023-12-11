@@ -1,7 +1,7 @@
 package ports
 
 import (
-	model "github.com/ArquitecturaDeSistemas/taskmicroservice/dominio"
+	model "github.com/ArquitecturaDeSistemas/taskmicroservice/src/dominio"
 )
 
 // puerto de salida
