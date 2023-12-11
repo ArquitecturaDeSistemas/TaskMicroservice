@@ -3,12 +3,11 @@ package database
 import (
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-
-	"os"
 )
 
 type DB struct {

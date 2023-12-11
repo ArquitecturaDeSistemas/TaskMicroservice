@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package proto;
+
+option go_package = "github.com/ArquitecturaDeSistemas/taskmicroservice/src/proto";
+
+service TaskService {
+  rpc CreateTask (CreateTaskRequest) returns (CreateTaskResponse);
+  rpc GetTask (GetTaskRequest) returns (GetTaskResponse);
+  rpc UpdateTask (UpdateTaskRequest) returns (UpdateTaskResponse);
+  rpc DeleteTask (DeleteTaskRequest) returns (DeleteTaskResponse);
+  rpc ListTasks (ListTasksRequest) returns (ListTasksResponse);
+}
+
+message CreateTaskRequest {
+  string titulo = 1;
+  string descripcion = 2;
+  google.protobuf.Timestamp fechaInicio = 3;
+  google.protobuf.Timestamp fechaTermino = 4;
+  string userId = 5;
+}
+
+message CreateTaskResponse {
+  string titulo = 1;
+  string descripcion = 2;
+  google.protobuf.Timestamp fechaInicio = 3;
+  google.protobuf.Timestamp fechaTermino = 4;
+  string userId = 5;
+}
+
+message GetTaskRequest {
+  string id = 1;
+}
+
+message GetTaskResponse {
+  string titulo = 1;
+  string descripcion = 2;
+  google.protobuf.Timestamp fechaInicio = 3;
+  google.protobuf.Timestamp fechaTermino = 4;
+  string userId = 5;
+}
+
+message UpdateTaskRequest {
+  string titulo = 1;
+  string descripcion = 2;
+  google.protobuf.Timestamp fechaInicio = 3;
+  google.protobuf.Timestamp fechaTermino = 4;
+  string userId = 5;
+}
+
+message UpdateTaskResponse {
+  string titulo = 1;
+  string descripcion = 2;
+  google.protobuf.Timestamp fechaInicio = 3;
+  google.protobuf.Timestamp fechaTermino = 4;
+  string userId = 5;
+}
+
+message DeleteTaskRequest {
+  string id = 1;
+}
+
+message DeleteTaskResponse {
+  string mensaje = 1;
+}
+
+message ListTasksRequest {
+}
+
+message ListTasksResponse {
+  repeated Task tasks = 1;
+}
+
+message Task{
+  string titulo = 1;
+  string descripcion = 2;
+  google.protobuf.Timestamp fechaInicio = 3;
+  google.protobuf.Timestamp fechaTermino = 4;
+  string userId = 5;
+}
+

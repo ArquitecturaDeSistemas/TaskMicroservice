@@ -26,7 +26,7 @@ func (tareaGORM *TareaGORM) ToGQL() (*Tarea, error) {
 		ID:           strconv.Itoa(int(tareaGORM.ID)),
 		Titulo:       tareaGORM.Titulo,
 		Descripcion:  tareaGORM.Descripcion,
-		fechaInicio:  tareaGORM.fechaInicio,
-		fechaTermino: tareaGORM.fechaTermino,
+		FechaInicio:  tareaGORM.fechaInicio,
+		FechaTermino: tareaGORM.fechaTermino,
 	}, nil
 }
